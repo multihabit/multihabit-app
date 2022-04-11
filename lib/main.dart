@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multihabit/util/swipedetector.dart';
+import 'package:multihabit/views/leaderboard.dart';
 import 'package:multihabit/views/log.dart';
 
 void main() {
@@ -24,7 +25,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build (BuildContext context) {
     return SwipeDetector(
-      onSwipeLeft: () => Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => const LogPage())),
+      onSwipeLeft: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const LogPage())),
+      onSwipeUp: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const LeaderboardPage())),
       child: const Scaffold(
         body: Center(
           child: Text("Dashboard"),

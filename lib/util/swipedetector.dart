@@ -61,8 +61,9 @@ class SwipeDetector extends StatelessWidget {
         this.onSwipeDown,
         this.onSwipeLeft,
         this.onSwipeRight,
-        SwipeConfiguration? swipeConfiguration})
-      : swipeConfiguration = swipeConfiguration ?? SwipeConfiguration();
+        SwipeConfiguration? swipeConfiguration,
+        Key? key})
+      : swipeConfiguration = swipeConfiguration ?? SwipeConfiguration(), super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +94,6 @@ class SwipeDetector extends StatelessWidget {
         if (dx < 0) dx = -dx;
         if (dy < 0) dy = -dy;
         double positiveVelocity = velocity < 0 ? -velocity : velocity;
-
-        print("dx: $dx, dy: $dy, v: $positiveVelocity");
 
         if (dx > swipeConfiguration.verticalSwipeMaxWidthThreshold) return;
         if (dy < swipeConfiguration.verticalSwipeMinDisplacement) return;
@@ -130,8 +129,6 @@ class SwipeDetector extends StatelessWidget {
         if (dx < 0) dx = -dx;
         if (dy < 0) dy = -dy;
         double positiveVelocity = velocity < 0 ? -velocity : velocity;
-
-        print("$dx $dy $velocity $positiveVelocity");
 
         if (dx < swipeConfiguration.horizontalSwipeMinDisplacement) return;
         if (dy > swipeConfiguration.horizontalSwipeMaxHeightThreshold) return;
