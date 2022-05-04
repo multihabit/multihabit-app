@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:multihabit/main.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multihabit/blocs/router/router_cubit.dart';
 import 'package:multihabit/util/swipedetector.dart';
+import 'package:multihabit/views/dashboard.dart';
 import 'package:multihabit/views/log.dart';
 import 'package:multihabit/views/stats.dart';
 
@@ -10,9 +12,9 @@ class LeaderboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SwipeDetector(
-      onSwipeRight: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const HomePage())),
-      onSwipeDown: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const LogPage())),
-      onSwipeLeft: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => const StatsPage())),
+      onSwipeRight: () => BlocProvider.of<RouterCubit>(context).goToDashboard(),
+      onSwipeDown: () => BlocProvider.of<RouterCubit>(context).goToLog(),
+      onSwipeLeft: () => BlocProvider.of<RouterCubit>(context).goToStats(),
       child: const Scaffold(
         body: Center(
           child: Text("Leaderboard Screen"),
