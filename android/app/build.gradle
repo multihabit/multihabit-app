@@ -48,6 +48,9 @@ android {
         targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders = [
+            "appAuthRedirectScheme": "com.multihabit.multihabit"
+        ]
     }
 
     buildTypes {
