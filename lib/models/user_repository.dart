@@ -1,22 +1,11 @@
-class UserRepository {
-  String? _userID;
+abstract class UserRepository {
+  String? accessToken;
+  Map<String,dynamic> userDetails = {};
+  Map<String,dynamic> idToken = {};
 
-  Future<UserRepository> signIn({
-    required String username,
-    required String password,
-  }) async {
-    await Future.delayed(const Duration(seconds: 3), () {
-      if ( username != "test" || password != "test") throw Exception("Incorrect login credentials provided.");
-    
-      _userID = username;
-    });
-    return Future.value(this);
-  }
+  bool get isSignedIn => accessToken != null && userDetails.isNotEmpty && idToken.isNotEmpty;
 
-  Future<UserRepository> signOut() {
-    _userID = null;
-    return Future.value(this);
-  }
-
-  bool get isSignedIn => _userID != null && _userID!.isNotEmpty;
+  Future<UserRepository> signIn() async => this;
+  Future<void> signOut() async {}
+  Future<Map<String,dynamic>> getUserDetails(String accessToken) async => <String,dynamic>{};
 }
