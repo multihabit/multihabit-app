@@ -8,7 +8,7 @@ export 'auth_state.dart';
 export 'auth_event.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  UserRepository _userRepository;
+  final UserRepository _userRepository;
 
   AuthBloc({required UserRepository userRepository}) 
     : _userRepository = userRepository, super(UninitializedState()) {
@@ -17,6 +17,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthenticatedState()); 
       } else {
         emit(UnauthenticatedState());
+      }
+    });
+    on<AuthRequestEvent>((event, emit) {
+      emit(AuthBusyState());
+      try {
+        _userRepository.signIn();
+
+        if (_userRepository.isSignedIn) {
+          emit(AuthSuccessState());
+        } else {
+          emit(AuthFailureState("Sign-In Failed"));
+        }
+      } catch (e) {
+        emit(AuthFailureState(e.toString()));
       }
     });
     on<AuthenticatedEvent>((event, emit) { emit(AuthenticatedState()); });

@@ -5,7 +5,7 @@ abstract class UserRepository {
 
   bool get isSignedIn => accessToken != null && userDetails.isNotEmpty && idToken.isNotEmpty;
 
-  Future<UserRepository> signIn() async => this;
+  Future<void> signIn() async {}
   Future<void> signOut() async {}
   Future<Map<String,dynamic>> getUserDetails(String accessToken) async => <String,dynamic>{};
 }

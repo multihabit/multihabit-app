@@ -19,7 +19,7 @@ class Auth0Repository extends UserRepository {
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   @override
-  Future<UserRepository> signIn() async {
+  Future<void> signIn() async {
     try {
       final AuthorizationTokenResponse? result = await appAuth.authorizeAndExchangeCode(
         AuthorizationTokenRequest(
@@ -36,8 +36,6 @@ class Auth0Repository extends UserRepository {
       userDetails = await getUserDetails(result.accessToken!);
 
       await secureStorage.write(key: "refresh_token", value: result.refreshToken!);
-
-      return this;
     } catch (_) {
       return Future.error("Unable to sign in");
     }
