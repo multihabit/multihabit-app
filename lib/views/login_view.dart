@@ -24,6 +24,7 @@ class _LoginViewState extends State<LoginView> {
       listener: (context, state) {
         if (state is AuthSuccessState) {
           Navigator.of(context, rootNavigator: true).pop();
+          _authBloc!.add(AuthenticatedEvent());
           Navigator.of(context).pop("fromLogin");
         }
 
