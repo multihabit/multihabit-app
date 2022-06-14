@@ -30,10 +30,11 @@ class Auth0Repository extends UserRepository {
         )
       );
 
-      if (result == null) return Future.error("Unable to sign in");
+      if (result == null) return Future.error("Unexpected Result");
 
       idToken = parseIdToken(result.idToken!);
       userDetails = await getUserDetails(result.accessToken!);
+      accessToken = result.accessToken;
 
       await secureStorage.write(key: "refresh_token", value: result.refreshToken!);
     } catch (_) {
@@ -43,7 +44,7 @@ class Auth0Repository extends UserRepository {
 
   @override
   Future<Map<String,dynamic>> getUserDetails(String accessToken) async {
-    final Uri url = Uri(path: "https://$auth0Domain/userinfo");
+    final Uri url = Uri(scheme: "https", host: auth0Domain, path: "userinfo");
     final http.Response response = await http.get(
       url,
       headers: {'Authorization': 'Bearer $accessToken'}
