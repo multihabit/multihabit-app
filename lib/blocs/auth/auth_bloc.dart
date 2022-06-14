@@ -19,10 +19,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(UnauthenticatedState());
       }
     });
-    on<AuthRequestEvent>((event, emit) {
+    on<AuthRequestEvent>((event, emit) async {
       emit(AuthBusyState());
       try {
-        _userRepository.signIn();
+        await _userRepository.signIn();
 
         if (_userRepository.isSignedIn) {
           emit(AuthSuccessState());
